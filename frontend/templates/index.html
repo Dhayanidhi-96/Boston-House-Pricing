@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Boston House Price Predictor</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #e3f2fd, #f9f9f9);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 900px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 5px;
+            color: #1a237e;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px 20px;
+        }
+
+        label {
+            font-size: 12px;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            padding: 8px 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+
+        .btn-container {
+            grid-column: span 3;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            background: #1976d2;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0d47a1;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #e8f5e9;
+            color: #1b5e20;
+            font-size: 22px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .error {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ffebee;
+            color: #b71c1c;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Boston House Price Prediction</h1>
+    <div class="subtitle">
+        Enter housing features to estimate the market value
+    </div>
+
+    <form method="POST">
+
+        {% for field in [
+            'CRIM','ZN','INDUS','CHAS','NOX','RM',
+            'AGE','DIS','RAD','TAX','PTRATIO','B','LSTAT'
+        ] %}
+        <div class="field">
+            <label>{{ field }}</label>
+            <input name="{{ field }}" required>
+        </div>
+        {% endfor %}
+
+        <div class="btn-container">
+            <button type="submit">Predict Price</button>
+        </div>
+    </form>
+
+    {% if prediction %}
+        <div class="result">
+            Estimated House Price: $ {{ prediction }}
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <footer>
+        Powered by Machine Learning • FastAPI + Flask
+    </footer>
+</div>
+
+</body>
+</html>

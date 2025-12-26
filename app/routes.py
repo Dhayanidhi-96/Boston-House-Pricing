@@ -4,7 +4,7 @@ from src.predict import predict_price
 
 router  = APIRouter()
 
-@router.post("predict")
+@router.post("/predict")
 def predict_house_price(data: HouseInput):
     price = predict_price(data.dict())
     return{
